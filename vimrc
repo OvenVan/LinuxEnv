@@ -6,8 +6,6 @@ source ~/nginx-1.14.0/contrib/vim/syntax/nginx.vim
 "https://blog.csdn.net/guicaisa/article/details/52389907
 
 map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
 
 set nu
 set hlsearch
