@@ -1,0 +1,28 @@
+
+Date: 18.07.17
+	1.When I use configure "master_process on", there is always something error. Today I get error that i cannot open an existing file "/root/Documents/Ctest". What's strange, I can open this file when master_process is off. Then I change the fileMod into '0666', it doesn't work at all, permission denied again. Then I began to wonder what the permissions is for the worker_process(no wonder the master_process is ROOT). finally i got the answer that I use "user nobody" at the beginning of the nginx.conf. The reason why Permission is denied while the file's mod is '0666' is that the document "Documents" has mod '0755'. Finally I change the configuration into "user root".
+	2. what's the difference between 'return (T*)p' and 'return new(p) T()'.
+when the memery is allocated, we need to put the object into the specific memery instead of allocating new one. 'return new(p) T()' called its constructor while 'return (T*)p' does not. However we might need to '#include <new>' to make it work.
+
+Date: 18.07.18
+	1.ex's birthday.
+	2.if we want to store a file in buffer, there are to ways to create a buffer:
+	ngx_buf_t* b = (ngx_buf_t)ngx_palloc(r->pool, sizeof(ngx_buf_t));
+		'or'
+	{
+		ngx_buf_t* b = ngx_create_temp_buf(r->pool, 0);
+		b->temporary = 0;
+		b->memory = 0;
+		b->mmap = 0;
+	}#if not, it will cause a 'zero size buf in writer t:1 r:0 f:1' error
+
+Date: 18.07.20
+	1.ERR when using 'ngx_file_info(path, &b)': at first i thought it was the incorrect string path(doesn't have '\0'), so i copied it into a new alloced memory, however it doesn't work again. Then i checked the errno, it shows 'no such file' while 'fd' is not nil. Finally i tried 'fstat'(accroding to fd) instead of 'stat'(accroding to path), it works. I guess it is because when I've already open this file, linux will hide this file that would't be found. However 'stat' does work sometimes. That's quite strange.
+
+Date: 18.07.26
+	1.Never use 'ngx_string()'. use 'toNgxstr()' instead. 
+	2.
+
+Date: 18.07.27
+	1.rewrite 'getfile' module. Be sure using 'ngx_null_cmd' not 'NULL'. add ';' at the end of struct. do not use 'static' on ngx_module_t. return 'NGX_CONF_OK'(null) while setting commands
+	2.I get a birthday congratulation today.
