@@ -1,4 +1,3 @@
-
 Date: 18.07.17
 	1.When I use configure "master_process on", there is always something error. Today I get error that i cannot open an existing file "/root/Documents/Ctest". What's strange, I can open this file when master_process is off. Then I change the fileMod into '0666', it doesn't work at all, permission denied again. Then I began to wonder what the permissions is for the worker_process(no wonder the master_process is ROOT). finally i got the answer that I use "user nobody" at the beginning of the nginx.conf. The reason why Permission is denied while the file's mod is '0666' is that the document "Documents" has mod '0755'. Finally I change the configuration into "user root".
 	2. what's the difference between 'return (T*)p' and 'return new(p) T()'.
